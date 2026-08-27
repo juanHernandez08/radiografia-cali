@@ -1,0 +1,698 @@
+<!doctype html>
+<title>Radiografía de Cali</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F3EC;
+    --paper-raised:#FFFFFF;
+    --ink:#1C2620;
+    --ink-soft:#4A554D;
+    --teal:#1B5E4F;
+    --teal-soft:#E4EDE8;
+    --gold:#B8801F;
+    --gold-soft:#F3E7D1;
+    --critical:#A93A2E;
+    --critical-soft:#F5E2DE;
+    --good:#3F7D4A;
+    --good-soft:#E4EEE2;
+    --line:#D7D9C9;
+    --shadow: 0 1px 2px rgba(28,38,32,0.06), 0 6px 20px -8px rgba(28,38,32,0.18);
+    --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body:'Public Sans', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141F19;
+      --paper-raised:#1A2620;
+      --ink:#EDEEE4;
+      --ink-soft:#AEBAB0;
+      --teal:#57AE93;
+      --teal-soft:#1E3A31;
+      --gold:#E1AA52;
+      --gold-soft:#3A2E17;
+      --critical:#E28576;
+      --critical-soft:#3B241F;
+      --good:#79C285;
+      --good-soft:#20321F;
+      --line:#2C3A32;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141F19;
+    --paper-raised:#1A2620;
+    --ink:#EDEEE4;
+    --ink-soft:#AEBAB0;
+    --teal:#57AE93;
+    --teal-soft:#1E3A31;
+    --gold:#E1AA52;
+    --gold-soft:#3A2E17;
+    --critical:#E28576;
+    --critical-soft:#3B241F;
+    --good:#79C285;
+    --good-soft:#20321F;
+    --line:#2C3A32;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.45);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:no-preference){
+    a, .stat-card, .theme-card{ transition: color .15s ease, background-color .15s ease, border-color .15s ease, transform .15s ease; }
+  }
+  a{ color:var(--teal); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+
+  .wrap{ max-width:840px; margin:0 auto; padding:0 24px 96px; }
+
+  /* ---------- Masthead ---------- */
+  header.masthead{
+    border-bottom:1px solid var(--line);
+    padding:40px 0 28px;
+    margin-bottom:40px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.1rem, 5vw, 3.1rem);
+    line-height:1.05;
+    letter-spacing:-.01em;
+    margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .dek{
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 18px;
+  }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:8px 18px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .meta-row strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- At a glance ---------- */
+  .glance{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-bottom:56px;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .stat-card{
+    background:var(--paper-raised);
+    padding:20px 18px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .stat-num{
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:1.85rem;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-.02em;
+  }
+  .stat-num.crit{ color:var(--critical); }
+  .stat-num.good{ color:var(--good); }
+  .stat-num.gold{ color:var(--gold); }
+  .stat-num.teal{ color:var(--teal); }
+  .stat-label{ font-size:13px; color:var(--ink-soft); line-height:1.35; }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ margin-bottom:60px; }
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:22px;
+  }
+  .section-num{
+    font-family:var(--font-mono); font-size:13px; color:var(--gold);
+    font-weight:600;
+  }
+  h2{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.55rem;
+    margin:0;
+    text-wrap:balance;
+  }
+  h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.12rem;
+    margin:0 0 8px;
+  }
+  p{ margin:0 0 14px; max-width:70ch; }
+  ul, ol{ margin:0 0 14px; padding-left:1.2em; }
+  li{ margin-bottom:6px; max-width:66ch; }
+  .lede{ font-size:1.02rem; color:var(--ink-soft); max-width:66ch; }
+
+  /* ---------- Theme cards (thematic diagnosis) ---------- */
+  .theme-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:22px 24px;
+    margin-bottom:16px;
+  }
+  .theme-card-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    margin-bottom:10px; flex-wrap:wrap;
+  }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    padding:3px 9px; border-radius:99px; white-space:nowrap;
+  }
+  .tag.crit{ background:var(--critical-soft); color:var(--critical); }
+  .tag.warn{ background:var(--gold-soft); color:var(--gold); }
+  .tag.good{ background:var(--good-soft); color:var(--good); }
+  .tag.info{ background:var(--teal-soft); color:var(--teal); }
+
+  .precedent{
+    border-left:3px solid var(--teal);
+    background:var(--teal-soft);
+    border-radius:0 3px 3px 0;
+    padding:12px 16px;
+    font-size:13.5px;
+    color:var(--ink);
+    margin:14px 0;
+  }
+  .precedent strong{ font-family:var(--font-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--teal); display:block; margin-bottom:4px; }
+
+  .strat-list{ margin:10px 0 4px; padding-left:1.2em; }
+  .strat-list li{ margin-bottom:9px; font-size:14.5px; }
+  .strat-list li strong{ color:var(--ink); }
+
+  /* bar */
+  .bar-row{ display:flex; align-items:center; gap:12px; margin:10px 0; }
+  .bar-track{ flex:1; height:8px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:99px; }
+  .bar-fill.crit{ background:var(--critical); }
+  .bar-fill.gold{ background:var(--gold); }
+  .bar-fill.teal{ background:var(--teal); }
+  .bar-fill.good{ background:var(--good); }
+  .bar-label{ font-family:var(--font-mono); font-size:13px; width:96px; text-align:right; font-variant-numeric:tabular-nums; flex-shrink:0; }
+  .bar-cap{ font-size:13.5px; color:var(--ink-soft); flex:1.4; }
+
+  /* ---------- Pull quotes (citizen / youth voices) ---------- */
+  blockquote{
+    margin:18px 0; padding:4px 0 4px 20px;
+    border-left:3px solid var(--gold);
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:1.08rem;
+    color:var(--ink);
+    max-width:62ch;
+  }
+  blockquote cite{
+    display:block; margin-top:6px;
+    font-family:var(--font-mono); font-style:normal; font-size:12px;
+    color:var(--ink-soft); letter-spacing:.02em;
+  }
+
+  /* ---------- Two-col grid for recommendations ---------- */
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:640px){ .grid-2{ grid-template-columns:1fr; } .glance{ grid-template-columns:1fr 1fr; } }
+
+  .reco{
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:18px 20px;
+    background:var(--paper-raised);
+  }
+  .reco-num{ font-family:var(--font-mono); color:var(--teal); font-size:12.5px; font-weight:600; letter-spacing:.05em; }
+  .reco h3{ margin-top:4px; margin-bottom:8px; font-size:1.02rem; }
+  .reco p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:0; }
+
+  /* ---------- Balance (avances) ---------- */
+  .balance-cols{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:640px){ .balance-cols{ grid-template-columns:1fr; } }
+  .balance-col h3{ display:flex; align-items:center; gap:8px; }
+  .balance-col h3 .sw{ width:9px; height:9px; border-radius:2px; }
+  .balance-col.up h3 .sw{ background:var(--good); }
+  .balance-col.down h3 .sw{ background:var(--critical); }
+
+  /* ---------- Channels ---------- */
+  .channels{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .channels{ grid-template-columns:1fr; } }
+  .channel{ border:1px solid var(--line); border-radius:3px; padding:16px 18px; background:var(--paper-raised); }
+  .channel a{ font-weight:600; text-decoration:none; }
+  .channel a:hover{ text-decoration:underline; }
+  .channel p{ font-size:13.5px; color:var(--ink-soft); margin:6px 0 0; }
+
+  /* ---------- Sources ---------- */
+  .sources{ font-size:13.5px; color:var(--ink-soft); }
+  .sources ol{ padding-left:1.4em; }
+  .sources li{ margin-bottom:8px; }
+  .sources a{ color:var(--ink-soft); }
+  .sources a:hover{ color:var(--teal); }
+  .note{
+    font-size:13px; color:var(--ink-soft); background:var(--teal-soft);
+    border-radius:3px; padding:12px 16px; margin:0 0 14px;
+  }
+
+  .alert-quake{
+    background:var(--critical-soft);
+    border:1px solid var(--critical);
+    border-radius:3px;
+    padding:14px 18px;
+    margin-bottom:40px;
+    font-size:14px;
+    color:var(--ink);
+    display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
+  }
+  .alert-quake strong{ font-family:var(--font-mono); text-transform:uppercase; font-size:11px; letter-spacing:.05em; color:var(--critical); }
+  .alert-quake a{ color:var(--critical); font-weight:600; }
+
+  footer{
+    border-top:1px solid var(--line);
+    margin-top:64px; padding-top:20px;
+    font-size:12.5px; color:var(--ink-soft);
+    font-family:var(--font-mono);
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow"><span class="dot"></span> Diagnóstico ciudadano · Santiago de Cali</div>
+    <h1>Qué le hace falta a Cali</h1>
+    <p class="dek">Un cruce de datos oficiales, encuestas independientes y la voz de la calle —con foco en los jóvenes, sin dejar a nadie más afuera— sobre la gestión del alcalde Alejandro Eder (2024–2027) y lo que la ciudad todavía necesita resolver.</p>
+    <div class="meta-row">
+      <span><strong>Alcalde actual:</strong> Alejandro Eder</span>
+      <span><strong>Periodo:</strong> 2024 – 2027</span>
+      <span><strong>Actualizado:</strong> agosto 2026</span>
+    </div>
+  </header>
+
+  <div class="alert-quake"><strong>Actualización</strong> El 10 de agosto de 2026 un terremoto de magnitud 7.4 golpeó el occidente de Colombia y afectó gravemente a Cali. Esta radiografía se escribió antes de ese evento; la sección 02 documenta sus consecuencias y cómo reconfiguran todo lo demás. Cifras al corte del 23 de agosto — <a href="https://www.cali.gov.co/gobierno/publicaciones/193607/terremoto-de-cali-repositorio-oficial-de-informacion/" target="_blank" rel="noopener">seguir el repositorio oficial de la Alcaldía ↗</a></div>
+
+  <div class="glance">
+    <div class="stat-card">
+      <div class="stat-num crit">66–70%</div>
+      <div class="stat-label">de los caleños desaprueba la gestión del alcalde (Guarumo/EcoAnalítica y Cali Cómo Vamos, 2026)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num good">74%</div>
+      <div class="stat-label">siente orgullo de vivir en Cali —la ciudad gusta más de lo que su gobierno convence</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num crit">57%</div>
+      <div class="stat-label">se siente inseguro en la ciudad; solo 19% se siente seguro (bajó de 31% en 2024)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num gold">47%</div>
+      <div class="stat-label">de avance del Plan de Desarrollo Municipal a septiembre de 2025</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num crit">19.2%</div>
+      <div class="stat-label">desempleo juvenil (14–28 años) a comienzos de 2026 —el doble de la tasa general de la ciudad</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num teal">$3.5 B</div>
+      <div class="stat-label">de deuda contraída por la Alcaldía, la más alta en la historia de la ciudad</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num crit">$3 B</div>
+      <div class="stat-label">de deuda hospitalaria acumulada en Cali por el impago de las EPS</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num gold">US$8.900</div>
+      <div class="stat-label">PIB per cápita de Cali —muy por debajo de Bogotá y Medellín (US$15.000–23.000)</div>
+    </div>
+  </div>
+
+  <section id="contexto">
+    <div class="section-head"><span class="section-num">01</span><h2>El punto de partida</h2></div>
+    <p class="lede">Cali vive una contradicción medible: es una ciudad que sus habitantes aman —72% dice estar satisfecho de vivir ahí— pero cuya dirección política reprueban de forma mayoritaria. Encuestas de Guarumo/EcoAnalítica y del propio programa ciudadano Cali Cómo Vamos coinciden en que la desaprobación de la administración de Alejandro Eder pasó de estar dividida en 2024 a superar el 66% en 2026, con la imagen favorable cayendo del 44% al 12–18% en el mismo periodo. Comparado con otros alcaldes de grandes ciudades (Barranquilla 88%, Medellín 73%, Bogotá 47% de aprobación), Cali es el caso más crítico del país.</p>
+    <p>Ese deterioro no es solo de imagen: el 58% de los ciudadanos está inconforme con cómo se invierte el presupuesto, y 47% percibe que la corrupción ha aumentado. Desde enero de 2025 hay, además, un proceso formal de revocatoria de mandato contra Eder en trámite ante la Registraduría, impulsado por el comité ciudadano "Todos por Cali", que necesitaría cerca de 150.000 firmas para forzar una consulta popular; no hay un reporte público que confirme si alcanzó ese umbral, pero el solo hecho de que el proceso exista y se sostenga en el tiempo es otro síntoma de la baja legitimidad que ya reflejan las encuestas. Lo que sigue es un mapa, tema por tema, de qué hay detrás de esas cifras —y de qué es lo que la propia ciudadanía, especialmente la más joven, pide que cambie.</p>
+  </section>
+
+  <section id="terremoto">
+    <div class="section-head"><span class="section-num">02</span><h2>El terremoto del 10 de agosto: el nuevo punto de partida</h2></div>
+    <p class="lede">A las 7:34 a.m. del 10 de agosto de 2026, un sismo de magnitud 7.4 con epicentro en Chocó (96 km de profundidad) sacudió el occidente de Colombia. Fue el evento más grave que ha enfrentado la administración de Alejandro Eder, y llegó apenas semanas después del diagnóstico anterior. Las cifras siguen actualizándose semana a semana; esto es lo que se sabe al corte del 21–23 de agosto.</p>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>El daño, en cifras</h3><span class="tag crit">Emergencia activa</span></div>
+      <p>En Cali: <strong>153 personas fallecidas y 1.657 heridas</strong>, con 9.090 viviendas y edificaciones reportando algún daño y 39.650 toneladas de escombros ya retirados. De los cerca de 8.600 predios identificados con afectación, solo 1.100 habían sido evaluados en detalle al corte disponible —y de esos, <strong>20% requeriría demolición</strong> y 55% presenta daño estructural grave. El sector educativo quedó especialmente golpeado: 238 de 338 colegios reportados (70%) sufrieron algún tipo de afectación. Más de 3.100 negocios caleños resultaron dañados, dentro de un Valle del Cauca que registró 10.710 unidades productivas afectadas en total.</p>
+      <p>A nivel nacional, el sismo dejó más de 239 muertos, cerca de 3.700 heridos y alrededor de 287 desaparecidos —cifras que se actualizaron día a día durante las labores de rescate—, con pérdidas económicas estimadas en $30 billones en cinco departamentos ($24.5 billones en edificaciones, $5.5 billones en infraestructura). El Valle del Cauca fue el departamento más golpeado del país, con $19.5 billones en pérdidas, y la Alcaldía estima el costo de reconstrucción de Cali en <strong>$10 billones</strong>.</p>
+      <div class="bar-row"><span class="bar-label">70%</span><div class="bar-track"><div class="bar-fill crit" style="width:70%"></div></div><span class="bar-cap">de los colegios de Cali con algún daño reportado</span></div>
+      <div class="bar-row"><span class="bar-label">20%</span><div class="bar-track"><div class="bar-fill crit" style="width:20%"></div></div><span class="bar-cap">de los predios evaluados requeriría demolición</span></div>
+      <div class="bar-row"><span class="bar-label">55%</span><div class="bar-track"><div class="bar-fill gold" style="width:55%"></div></div><span class="bar-cap">con daño estructural grave (sin llegar a demolición)</span></div>
+      <p style="margin-top:12px; font-size:14.5px; color:var(--ink-soft);">La ciudad pasó ya de la fase de búsqueda y rescate a la de recuperación: remoción de escombros, restablecimiento de servicios públicos, evaluación estructural predio por predio, traslado de familias damnificadas a hoteles y vigilancia policial contra saqueos —reportados ya en zonas evacuadas como Molino Rojo. El Concejo le pide a la Alcaldía declarar <strong>calamidad pública</strong>, algo que aún no se ha decretado formalmente; esa figura permitiría alivios en servicios públicos, exenciones en predial e industria y comercio, subsidios de arriendo para familias sin vivienda, y reorientar créditos hacia Educación, Salud, Vivienda e Infraestructura.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Por qué esto reconfigura todo el diagnóstico</h3><span class="tag info">Lectura</span></div>
+      <p>El terremoto no reemplaza los problemas que ya documentamos —seguridad, empleo joven, vías y buen gobierno—; los pone a competir por los mismos recursos, en una ciudad con mucho menos margen del que tenía hace tres semanas:</p>
+      <ul class="strat-list">
+        <li><strong>Choque fiscal directo.</strong> Cali ya cargaba una deuda récord de $3.5 billones antes del sismo. Sumar $10 billones de reconstrucción, en una ciudad con el Plan de Desarrollo al 47% de ejecución, obliga a decidir qué se sacrifica: no hay forma de financiar todo a la vez.</li>
+        <li><strong>La malla vial ya rota, ahora con daño sísmico encima.</strong> El 65% de las vías de Cali estaba en mal estado antes del terremoto; el plan "Obras de Corazón" se diseñó para ese problema, no para daño estructural por sismo. Es previsible que quede corto frente a la nueva escala del deterioro.</li>
+        <li><strong>Riesgo real sobre el empleo que se venía recuperando.</strong> Los más de 3.100 negocios dañados en Cali amenazan directamente la mejora de formalidad de 2025; si no reabren, la informalidad juvenil —ya en 55%— puede subir en vez de bajar.</li>
+        <li><strong>Un frente de seguridad nuevo, sobre una fuerza ya estirada.</strong> Los saqueos reportados en zonas evacuadas se suman a una Policía que ya mostraba fallas de continuidad de mando y de coordinación interinstitucional.</li>
+        <li><strong>Un frente que no existía: vivienda y reasentamiento.</strong> Miles de familias con orden de demolición o daño estructural grave son, literalmente, un problema nuevo que no estaba en ningún diagnóstico anterior de la ciudad.</li>
+        <li><strong>El riesgo clásico de la reconstrucción de emergencia: contratación opaca.</strong> $10 billones ejecutándose bajo presión de urgencia son, en cualquier país, el terreno más fértil para contratos cuestionables —justo en una administración que ya enfrenta una investigación abierta de la Procuraduría por cobros irregulares a contratistas. La vigilancia ciudadana sobre estos contratos (SECOP, Personería, veedurías) importa ahora más que antes, no menos.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="diagnostico">
+    <div class="section-head"><span class="section-num">03</span><h2>Diagnóstico por frentes (antes del terremoto)</h2></div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Seguridad: bajan algunos delitos, no baja el miedo</h3><span class="tag crit">Crítico</span></div>
+      <p>Cali volvió a superar los 1.000 homicidios en 2025, y 2026 no mejora la tendencia: entre el 1 de enero y el 16 de abril hubo 322 homicidios (+8% frente al mismo periodo de 2025) y para el 6 de junio la cifra ya llegaba a 479 —cuatro veces más que Medellín (120), que en ese mismo lapso llegó a pasar 10 días seguidos sin un solo homicidio. La violencia se concentra: cinco comunas (15, 21, 18, 14 y 13) reúnen cerca del 36% de los casos, el sicariato explica 73% de los homicidios, y la mayoría ocurre entre las 6 p.m. y las 3 a.m., con picos los fines de semana.</p>
+      <p>La diferencia con Medellín no es casualidad, según expertos en seguridad: mientras allá unas pocas estructuras criminales consolidadas evitan matarse entre sí para no atraer a la Policía ("gobernanza criminal"), en Cali compiten más de 190 bandas fragmentadas por el microtráfico y la extorsión, sin ningún acuerdo que contenga la violencia —agravado por la cercanía de la ciudad al puerto de Buenaventura, corredor clave del narcotráfico. Encima de ese problema estructural hay fallas internas documentadas por la prensa: tres comandantes de Policía distintos en dos años, retrasos en la contratación de equipos operativos, y una administración que combinó cifras de 2024 y 2025 para presentar como éxito lo que analistas describen como una meta incumplida.</p>
+      <p>No todo es negativo: los hurtos cayeron 21% en 2026, con mejoras notables en robo de comercio y de motocicletas, y el programa de prevención "En la Buena" —dirigido a jóvenes de 18 a 30 años— reporta 13 homicidios evitados. Pero la percepción ciudadana no ha reaccionado: solo 19% de los caleños se siente seguro en la ciudad (era 31% en 2024) y apenas 42% se siente seguro en su propio barrio (era 57%). El 56% señala los atracos callejeros como el problema principal y la percepción de pandillas creció de 13% a 22%. Detrás de la desconfianza hay un problema institucional: 62% de las víctimas no denuncia y 63% está insatisfecho con la justicia.</p>
+      <div class="bar-row"><span class="bar-label">–21% hurtos</span><div class="bar-track"><div class="bar-fill good" style="width:21%"></div></div><span class="bar-cap">caída de hurtos en 2026, el único indicador claramente positivo</span></div>
+      <div class="bar-row"><span class="bar-label">+8% homic.</span><div class="bar-track"><div class="bar-fill crit" style="width:38%"></div></div><span class="bar-cap">aumento de homicidios interanual (ene–abr 2026)</span></div>
+      <div class="bar-row"><span class="bar-label">57%</span><div class="bar-track"><div class="bar-fill crit" style="width:57%"></div></div><span class="bar-cap">se siente inseguro en la ciudad (subió desde 2024)</span></div>
+      <div class="bar-row"><span class="bar-label">62%</span><div class="bar-track"><div class="bar-fill crit" style="width:62%"></div></div><span class="bar-cap">de las víctimas no denuncia los delitos</span></div>
+      <p style="margin-top:12px; font-size:14.5px; color:var(--ink-soft);"><strong>Las cinco comunas más golpeadas (ene–abr 2026):</strong> Comuna 15 (32 casos), Comuna 18 (27), Comuna 21 (25), Comuna 14 (24) y Comuna 13 (23) —las mismas zonas orientales que concentran la violencia contra jóvenes mencionada más adelante.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Movilidad: el MIO se muere y la moto gana la calle</h3><span class="tag crit">Crítico</span></div>
+      <p>El sistema MIO atraviesa la peor crisis de sus 20 años: solo el 59% de la flota está operativa, mueve 275.000 pasajeros diarios frente a una meta original de 960.000, y arrastra deudas por más de $80.000 millones con riesgo de litigios hasta por $1.3 billones. Su modelo financiero —pagar a los operadores por kilómetro recorrido y no por pasajero— nunca funcionó, y de las 12 fuentes de financiación aprobadas desde 2015 ninguna se implementó del todo. Resultado: la moto ya es el medio de transporte principal (26%, frente a 7% en 2005), superando al MIO (21%), con 93% de satisfacción entre motociclistas frente a solo 25% entre usuarios del MIO.</p>
+      <div class="bar-row"><span class="bar-label">93% moto</span><div class="bar-track"><div class="bar-fill good" style="width:93%"></div></div><span class="bar-cap">satisfacción de quienes usan moto propia</span></div>
+      <div class="bar-row"><span class="bar-label">25% MIO</span><div class="bar-track"><div class="bar-fill crit" style="width:25%"></div></div><span class="bar-cap">satisfacción de quienes usan el sistema MIO</span></div>
+      <div class="bar-row"><span class="bar-label">67%</span><div class="bar-track"><div class="bar-fill gold" style="width:67%"></div></div><span class="bar-cap">insatisfecho con el estado de las vías</span></div>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Vías y tránsito: más de un millón de vehículos para una malla vial que no creció</h3><span class="tag crit">Crítico</span></div>
+      <p>Cali tiene hoy más de un millón de vehículos matriculados —cerca de 520.000 carros particulares y 430.000 motocicletas, más unos 900 buses del MIO y 5.000 vehículos de transporte colectivo tradicional— y entre el 75% y el 80% de ese parque circula a diario. El crecimiento no se ha detenido: a nivel nacional el parque automotor de Colombia superó los 21.3 millones de vehículos en 2025 (63% motos), y en Cali las ventas de vehículos crecieron 21% solo en el último año medido. El resultado es previsible: la ciudad no fue diseñada, ni sus vías ampliadas, al ritmo en que crece la flota que circula por ellas.</p>
+      <p>La moto es hoy el síntoma más visible de esa presión. Ya es el modo de transporte principal en Cali (26%, superando al MIO) y representa el <strong>80% de los siniestros viales</strong> de la ciudad —el precio de una alternativa económica que miles de caleños eligen precisamente porque el transporte público no les responde. A la vez, la malla vial se está quedando atrás: <strong>65% de los 2.935 kilómetros de vías de Cali están en mal estado</strong> (antes de las reparaciones recientes llegó a ser 75%), con huecos recurrentes en corredores como la Calle 70, la Comuna 16 y el sector de Decepaz, donde el deterioro ya afecta el paso de ambulancias y otros servicios de emergencia.</p>
+      <div class="bar-row"><span class="bar-label">80%</span><div class="bar-track"><div class="bar-fill crit" style="width:80%"></div></div><span class="bar-cap">de los siniestros viales de Cali involucran motocicletas</span></div>
+      <div class="bar-row"><span class="bar-label">65%</span><div class="bar-track"><div class="bar-fill crit" style="width:65%"></div></div><span class="bar-cap">de la malla vial de la ciudad está en mal estado</span></div>
+      <div class="bar-row"><span class="bar-label">26% moto</span><div class="bar-track"><div class="bar-fill gold" style="width:26%"></div></div><span class="bar-cap">de los viajes se hacen en moto propia, ya por encima del MIO (21%)</span></div>
+      <p style="margin-top:12px; font-size:14.5px; color:var(--ink-soft);">La Alcaldía tiene en marcha el proyecto "Obras de Corazón" (218 de 287 tramos ya reparados, más de $70.000 millones invertidos) y un nuevo contrato de más de $100.000 millones, con la meta de recuperar toda la malla vial "en un periodo no menor de cuatro años". Analistas de movilidad advierten que sin desincentivos reales al vehículo particular, más carriles y parches solo aplazan el problema: la solución de fondo pasa por un transporte masivo que sí funcione (ver MIO, arriba) y una planeación urbana que hoy está débilmente conectada con la política de transporte.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Empleo joven: mejora frágil, todavía muy por detrás del resto de la ciudad</h3><span class="tag warn">Preocupante</span></div>
+      <p>El desempleo juvenil en Cali tuvo una mejora real en 2025 —bajó a 16.9% entre marzo y mayo, el nivel más bajo en años, ayudado en parte por el empleo temporal que generó la cumbre COP16— pero repuntó a <strong>19.2%</strong> en el primer trimestre de 2026, casi el doble de la tasa general de la ciudad (9.8%, la más baja para ese periodo desde 2007). Es la ganancia más frágil de todo el diagnóstico: depende de eventos puntuales y se revierte apenas desaparece el impulso que la sostiene.</p>
+      <p>Detrás del promedio hay barreras muy concretas: 53% de las empresas todavía exige experiencia previa a quien busca su primer empleo, hay una desconexión reconocida entre lo que enseña la educación y lo que pide el mercado, y persisten brechas digitales y de habilidades blandas. Un joven sin experiencia puede tardar hasta 9 meses en conseguir trabajo, frente a menos de un mes para alguien con posgrado; esa espera es aún mayor para mujeres jóvenes (62 días de búsqueda frente a 39 de los hombres), personas con discapacidad (312 días) y migrantes (167 días). La informalidad juvenil llega a 55%, muy por encima del 47.7% general de la ciudad —que ya es mejor que el promedio nacional (55.9%)—, y un año después de graduarse, 34.9% de los jóvenes caleños sigue sin trabajo formal.</p>
+      <div class="bar-row"><span class="bar-label">19.2%</span><div class="bar-track"><div class="bar-fill crit" style="width:70%"></div></div><span class="bar-cap">desempleo juvenil (14–28 años), primer trimestre 2026</span></div>
+      <div class="bar-row"><span class="bar-label">9.8%</span><div class="bar-track"><div class="bar-fill gold" style="width:36%"></div></div><span class="bar-cap">desempleo general de la ciudad, mismo periodo</span></div>
+      <div class="bar-row"><span class="bar-label">55%</span><div class="bar-track"><div class="bar-fill crit" style="width:55%"></div></div><span class="bar-cap">de los jóvenes empleados trabaja en la informalidad</span></div>
+      <p style="margin-top:12px; font-size:14.5px; color:var(--ink-soft);">El fondo del problema es estructural, no coyuntural: en 2020, 32.7% de los jóvenes caleños (175.059 personas) no estudiaba ni trabajaba, y 57.7% de ellos vivía en pobreza monetaria —el mismo grupo que, según los propios organismos de seguridad, es el más expuesto al reclutamiento por economías ilegales cuando el mercado formal no les ofrece una alternativa creíble.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Crecimiento económico: la base que sostiene —o no— el empleo joven</h3><span class="tag warn">Preocupante</span></div>
+      <p>El desempleo juvenil no se explica solo por barreras de acceso al primer empleo: detrás está una economía que no crece al ritmo que necesitaría para absorber a quienes buscan trabajo. El PIB per cápita de Cali ronda los US$8.400–8.900, muy por debajo de Bogotá y Medellín (entre US$15.000 y US$23.000 según el indicador que se use), y el sector industrial —tradicionalmente el motor de empleo formal caleño— todavía no recupera el peso que tenía sobre la economía local en los años 90. Se suma un problema logístico estructural: el corredor Cali–Buenaventura, la puerta de salida al Pacífico para buena parte del comercio exterior del país, sigue lastrado por altos costos de transporte y cuellos de botella viales que encarecen tanto las exportaciones como la instalación de nueva industria. El Gini de la ciudad, cercano a 0.50, confirma que el problema no es solo cuánto crece la economía sino para quién crece.</p>
+      <div class="bar-row"><span class="bar-label">US$8.900</span><div class="bar-track"><div class="bar-fill crit" style="width:40%"></div></div><span class="bar-cap">PIB per cápita aproximado de Cali, frente a US$15.000–23.000 en Bogotá y Medellín</span></div>
+      <div class="bar-row"><span class="bar-label">0.50</span><div class="bar-track"><div class="bar-fill gold" style="width:50%"></div></div><span class="bar-cap">coeficiente de Gini de la ciudad —desigualdad alta y persistente</span></div>
+      <p>No todo es negativo. En los últimos reportes disponibles, la región captó US$1.151 millones en inversión extranjera directa en 63 proyectos —con una proyección, todavía por confirmarse en la práctica, de más de 110.000 empleos asociados— y las 819 empresas exportadoras de la ciudad sumaron US$1.178 millones en ventas al exterior. La Alcaldía, por su parte, lanzó "Invertir para Crecer", un plan de crédito y cofinanciación por $3.5 billones que proyecta 32 proyectos productivos, 38.000 empleos nuevos, sacar a 14.000 personas de la pobreza extrema y sumar 1.12 puntos porcentuales al PIB local. Son cifras de proyección oficial, no de ejecución verificada, y corresponden a la misma deuda cuestionada en "Buen gobierno" (abajo) por falta de estudios técnicos completos: la ciudad tiene, al mismo tiempo, un crédito bajo sospecha y la apuesta más concreta que existe hoy para generar el empleo que el resto de este informe pide con urgencia.</p>
+      <div class="bar-row"><span class="bar-label">US$1.151 M</span><div class="bar-track"><div class="bar-fill good" style="width:55%"></div></div><span class="bar-cap">inversión extranjera directa captada, en 63 proyectos</span></div>
+      <div class="bar-row"><span class="bar-label">38.000</span><div class="bar-track"><div class="bar-fill gold" style="width:45%"></div></div><span class="bar-cap">empleos proyectados —no confirmados— por el plan "Invertir para Crecer"</span></div>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Buen gobierno: contratación, deuda y una investigación abierta</h3><span class="tag crit">Crítico</span></div>
+      <p>La Procuraduría abrió una investigación disciplinaria por presuntos cobros ilegales a contratistas —hasta 40% de su salario mensual, cobrados a través de plataformas digitales, con amenaza de "lista negra" para quien se negara. La Alcaldía negó tolerar corrupción, activó protocolos internos y puso denuncias ante la Fiscalía; la investigación sigue abierta. En paralelo pesan una deuda récord de $3.5 billones autorizada sin estudios técnicos completamente claros, según cuestionamientos del Concejo, y un Plan de Desarrollo que a septiembre de 2025 solo llevaba 47% de cumplimiento, con el Plan de Ordenamiento Territorial y el proyecto "Cali Distrito" todavía pendientes.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Salud: la crisis que se nos había pasado por alto</h3><span class="tag crit">Crítico</span></div>
+      <p>Mientras el debate público se concentraba en seguridad, movilidad y el terremoto, el sistema de salud de Cali se acercaba en silencio a un punto de quiebre. El Hospital Universitario del Valle (HUV) —la principal red pública de la región— arrastra más de $600.000 millones en deudas, y la Fundación Valle del Lili tiene más de $700.000 millones represados en cuentas por cobrar a EPS. En total, la deuda hospitalaria en Cali supera los $3 billones, cerca de $6 billones a nivel del Valle del Cauca, dentro de una obligación nacional de las EPS que excede los $20 billones. La gobernadora Dilian Francisca Toro lo resumió sin rodeos: "llegará un momento en que algunas instituciones cierren sus puertas [...] no tenemos esa capacidad" en la red pública para absorber ese golpe.</p>
+      <p>El efecto ya se siente: la Personería recibió más de 6.700 quejas ciudadanas entre enero y abril de 2026 por falta de citas con especialistas, desabastecimiento de medicamentos y procedimientos aplazados, y varios hospitales han tenido que suspender temporalmente la atención a EPS que no les pagan. No es un problema exclusivo de Cali —es la crisis nacional del sistema de salud golpeando directamente a su red hospitalaria de referencia para todo el suroccidente del país—, pero eso no lo hace menos urgente para quien gobierne la ciudad.</p>
+      <div class="bar-row"><span class="bar-label">$3 B</span><div class="bar-track"><div class="bar-fill crit" style="width:75%"></div></div><span class="bar-cap">deuda hospitalaria acumulada en Cali (billones de pesos)</span></div>
+      <div class="bar-row"><span class="bar-label">6.700+</span><div class="bar-track"><div class="bar-fill gold" style="width:55%"></div></div><span class="bar-cap">quejas ciudadanas por fallas en la atención (ene–abr 2026)</span></div>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Medio ambiente: ríos, aire y ruido sin control real</h3><span class="tag warn">Preocupante</span></div>
+      <p>Cinco de los siete ríos de Cali muestran deterioro en su calidad de agua; el río Cauca, que abastece el 70% del agua potable de la ciudad, recibió en un solo año 32.507 toneladas de materia orgánica contaminante. Las quejas por ruido subieron 66% en un año (el máximo en cuatro años) y, más grave aún, en 2022 ninguna estación de monitoreo de aire (PM10) alcanzó el mínimo de datos requerido para saber si el aire es respirable. La ciudad tiene apenas 4.6 m² de zona verde por habitante, muy por debajo del estándar recomendado.</p>
+    </div>
+  </section>
+
+  <section id="ciudadanos">
+    <div class="section-head"><span class="section-num">04</span><h2>Lo que dice la calle</h2></div>
+    <p class="lede">Más allá de las cifras, las encuestas de percepción y los reportajes recogen directamente lo que piensan los caleños de a pie sobre su ciudad y su administración.</p>
+    <blockquote>Aman su ciudad, pero reprueban la gestión administrativa.
+      <cite>— Síntesis de la Encuesta de Percepción Ciudadana 2025, Cali Cómo Vamos</cite>
+    </blockquote>
+    <p>El contraste es la noticia: 74% de orgullo por la ciudad frente a 67% que califica como mala la gestión del alcalde y apenas 12% que la ve favorable. La desconfianza institucional es alta y pareja: 63% desconfía de la Alcaldía, 58% del Concejo. No es apatía —es una ciudadanía que quiere a su ciudad y le exige más a quien la gobierna. Del lado positivo, hay señales reales de mejora en la economía cotidiana: la pobreza autopercibida bajó de 24% a 15%, y el porcentaje de hogares que come menos de tres comidas al día cayó de 22% a 11%.</p>
+  </section>
+
+  <section id="jovenes">
+    <div class="section-head"><span class="section-num">05</span><h2>La voz de los jóvenes</h2></div>
+    <p class="lede">Cali tiene una población joven grande y, según las propias encuestas de percepción comparada de la Red de Ciudades Cómo Vamos, es también la más crítica frente al rumbo de su ciudad —optimista con su futuro personal, pero exigente con el presente urbano que le tocó. Esto es lo que dicen, en sus propias palabras y en los datos que respaldan esas palabras.</p>
+
+    <blockquote>Cali está "descuidada", "deteriorada", "desordenada" e "insegura" —y sienten que se ha perdido el sentido de pertenencia.
+      <cite>— Recogido entre jóvenes caleños, El País Cali</cite>
+    </blockquote>
+
+    <p>El desempleo es, en sus propias palabras, la preocupación más sentida: "el trabajo dignifica". Después vienen la desigualdad y la pobreza, las trabas para entrar a la universidad pública, las demoras en salud y una seguridad que describen como "muy disparada" y con poca presencia de autoridad. En las comunas orientales (13, 15 y 21), donde se concentra buena parte de los más de 500 homicidios de jóvenes registrados en un semestre reciente, la disputa de bandas por el territorio y el narcotráfico son el motor de la violencia que más directamente los toca.</p>
+
+    <div class="grid-2">
+      <div>
+        <h3>Lo que piden</h3>
+        <ul>
+          <li>Empleo digno, no solo "programas" temporales</li>
+          <li>Transporte público eficiente y seguro</li>
+          <li>Mejor infraestructura vial y espacios verdes</li>
+          <li>Educación superior más inclusiva y accesible</li>
+          <li>Participación real en las decisiones municipales, no solo consulta simbólica</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Lo que ya ofrecen ellos mismos</h3>
+        <p style="font-size:14.5px; color:var(--ink-soft);">Muchos jóvenes consultados no solo piden: se comprometen con civismo, voluntariado social y cuidado de espacios comunitarios. La ciudad ya tiene un canal formal para canalizar eso —el Consejo Municipal de Juventud, con 21 curules elegidas por voto popular— pero su incidencia real en el presupuesto y las decisiones grandes de la ciudad sigue siendo limitada.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:8px;"><strong>Otras señales de alerta que no deberían minimizarse:</strong> la deserción escolar creció (5.192 estudiantes menos matriculados en un año reciente, y 1 de cada 5 niños y adolescentes entre 5 y 16 años está fuera del sistema educativo), y los indicadores de salud sexual y reproductiva en niñas de 10 a 14 años muestran un aumento preocupante que las autoridades de salud vinculan a abuso sistemático. Son problemas que exceden a la Alcaldía, pero que una política de juventud seria no puede tratar como algo aparte de "lo urbano".</p>
+
+    <h3 style="margin-top:32px;">Lo que ya le gusta a Cali —y en lo que la ciudad tiene con qué ganarse a sus jóvenes</h3>
+    <p class="lede">El diagnóstico no puede quedarse solo en lo que falta. Cali tiene activos culturales y deportivos genuinos con los que ya está conectando a su juventud, y que un próximo gobierno tiene la oportunidad de tratar como política pública en serio —no como folclor de feria— porque ya están funcionando como alternativa real frente a la violencia y la falta de empleo.</p>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>La salsa ya es una ruta de empleo, no solo una fiesta</h3><span class="tag good">Activo real</span></div>
+      <p><strong>Delirio</strong>, el colectivo cultural caleño, sostiene hoy más de 350 empleos directos entre técnicos, producción y bailarines, ha llevado sus espectáculos a más de 670.000 espectadores en 20+ países, y está conectado con más de 100 escuelas de salsa de la ciudad. Sus propias historias lo cuentan mejor que cualquier cifra: bailarines que crecieron rodeados de violencia y adicción encontraron en la salsa una carrera real —no un pasatiempo— con casa propia, familia y negocio construidos a partir del baile.</p>
+      <p>La Gobernación respalda esto con el programa <strong>Escuela Apoyada</strong>: 765 bailarines y coreógrafos beneficiados en 15 municipios en 2024, con la meta de llegar a 100 escuelas y más de 1.000 beneficiarios en 2025, incluyendo becas mensuales y acompañamiento para jóvenes en situación de vulnerabilidad. Y en la Feria de Cali 2025, el Salsódromo tuvo por primera vez una <strong>competencia juvenil formal</strong>: 48 escuelas de baile jóvenes compitieron en 1.5 km de la Autopista Suroriental, bajo la lluvia, con seis escuelas debutando en el podio —una señal clara de que a los jóvenes esto sí les importa, y de que competir en serio (no solo desfilar) los engancha más.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Una cantera deportiva con historia, todavía subutilizada</h3><span class="tag good">Activo real</span></div>
+      <p>Cali se ganó a pulso el título de "Capital Deportiva de América": Juegos Panamericanos en 1971, Juegos Mundiales, Mundial de Ciclismo en Pista y Mundial Juvenil de Atletismo entre 2013 y 2015, y 21 escenarios deportivos repartidos en seis municipios de la región. Los Juegos Panamericanos Junior —pensados explícitamente como cantera para que jóvenes deportistas lleguen a los Panamericanos adultos— son el ejemplo más claro de cómo ese legado puede convertirse en una ruta concreta de desarrollo para adolescentes, no solo en un recuerdo de postal.</p>
+      <p style="font-size:14.5px; color:var(--ink-soft);">El reto no es la infraestructura —ya existe—, es mantenerla activa, accesible y segura para el uso cotidiano de los jóvenes de las comunas más golpeadas por la violencia, no solo para eventos internacionales puntuales.</p>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Lo que todavía piden: espacios propios, de noche, y seguros</h3><span class="tag warn">Pendiente</span></div>
+      <p>Con la estrategia "Parques Seguros", la Alcaldía ya modernizó el alumbrado de 27 espacios públicos —una respuesta directa a algo que los jóvenes vienen pidiendo hace años: poder usar la ciudad después de las 6 p.m. sin que eso signifique arriesgarse. Es un paso real, pero apenas cubre una fracción de los parques de la ciudad. Las culturas urbanas —hip hop, grafiti, breakdance— también tienen ya un lugar reconocido en la agenda cultural oficial (festivales como Ciudad Hip Hop), pero con mucho menos presupuesto e infraestructura permanente que la salsa o el deporte tradicional, pese a ser exactamente el tipo de expresión que más conecta con jóvenes de comunas periféricas.</p>
+      <p style="font-size:14.5px; color:var(--ink-soft);">El patrón se repite: cuando Cali invierte en serio en cultura y deporte para jóvenes —con becas, competencia real y continuidad, no solo un evento anual— la respuesta es inmediata y masiva. La oportunidad para el próximo gobierno es tratar esto como se trata la seguridad o el empleo: con presupuesto sostenido, cobertura en las comunas que hoy tienen menos, y métricas de impacto, no como gasto cultural simbólico.</p>
+    </div>
+  </section>
+
+  <section id="balance">
+    <div class="section-head"><span class="section-num">06</span><h2>En honor a la balanza</h2></div>
+    <p class="lede">Un diagnóstico honesto no es solo una lista de quejas. Esto es lo que la propia administración y la prensa reportan como avances, junto a lo que sigue sin resolverse.</p>
+    <div class="balance-cols">
+      <div class="balance-col up">
+        <h3><span class="sw"></span> Ha avanzado</h3>
+        <ul>
+          <li>El presupuesto de inversión municipal creció de $5.8 a $7.2 billones en 2025 (80% para inversión)</li>
+          <li>Obras iniciadas en más de 50 colegios, centros de salud, parques y escenarios deportivos</li>
+          <li>Recuperación de estaciones de policía y más tecnología de monitoreo</li>
+          <li>Pobreza autopercibida e inseguridad alimentaria a la baja</li>
+        </ul>
+      </div>
+      <div class="balance-col down">
+        <h3><span class="sw"></span> Sigue pendiente</h3>
+        <ul>
+          <li>Homicidios: 1.058 casos en 2025, por encima del promedio nacional</li>
+          <li>Plan de Desarrollo al 47% de cumplimiento a nueve meses del cierre de vigencia</li>
+          <li>Alta rotación de secretarios, sobre todo en Movilidad</li>
+          <li>Deuda hospitalaria de $3 billones sin resolver</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="theme-card" style="margin-top:16px;">
+      <div class="theme-card-head"><h3>Las grandes definiciones institucionales que están en juego</h3><span class="tag info">En curso</span></div>
+      <p>Más allá del día a día, hay al menos tres decisiones estructurales en marcha que van a pesar más en el futuro de Cali que cualquier balance anual —y que valen la pena vigilar de cerca:</p>
+      <ul class="strat-list">
+        <li><strong>El nuevo POT, y con él, "Cali Distrito".</strong> La Alcaldía radicó en agosto de 2026 el nuevo Plan de Ordenamiento Territorial para revisión ciudadana ante el Consejo Territorial de Planeación, con la meta de aprobarlo antes de que termine el año. Se articula con la aspiración de convertir a Cali en Distrito Especial y con el AMSO (Área Metropolitana del Suroccidente, que integraría a Cali con Jamundí y Puerto Tejada) —es decir, define literalmente cómo va a crecer y gobernarse la ciudad en las próximas décadas.</li>
+        <li><strong>El Tren de Cercanías Cali–Jamundí–Palmira–Yumbo.</strong> Reduciría los tiempos de desplazamiento regional en 34%. La Alcaldía, la Gobernación y Jamundí ya comprometieron su parte de la cofinanciación; falta el 70% que le correspondería a la Nación, todavía sin cerrar del todo.</li>
+        <li><strong>Un reclamo de fondo sobre inversión nacional.</strong> Cali y el Valle del Cauca aportan cerca del 10% del PIB del país, pero reciben apenas el 3% de la inversión nacional en infraestructura —una desproporción que Cali Cómo Vamos elevó directamente al gobierno nacional junto con seguridad, salud y el tren de cercanías como las prioridades regionales más urgentes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="recomendaciones">
+    <div class="section-head"><span class="section-num">07</span><h2>Qué se puede y se debe mejorar</h2></div>
+    <p class="lede">Cruzando los datos duros con lo que piden los ciudadanos —jóvenes incluidos, pero no solo ellos— estas son las líneas de acción más respaldadas por la evidencia:</p>
+    <div class="grid-2">
+      <div class="reco"><div class="reco-num">01 · Seguridad</div><h3>Recuperar confianza, no solo bajar cifras</h3><p>Presencia sostenida en comunas 13, 15 y 21; rutas de denuncia que funcionen; prevención de reclutamiento juvenil con oportunidades reales, no solo operativos.</p></div>
+      <div class="reco"><div class="reco-num">02 · Movilidad</div><h3>Resolver la crisis financiera del MIO de raíz</h3><p>Ejecutar las fuentes de financiación ya aprobadas desde 2015; renegociar el modelo de pago por pasajero; integrar el transporte colectivo sin imponerlo por decreto.</p></div>
+      <div class="reco"><div class="reco-num">03 · Empleo</div><h3>Cerrar la brecha educación–trabajo</h3><p>Rutas de primer empleo con seguimiento real; políticas diferenciadas para NINIs y para mujeres jóvenes con cargas de cuidado.</p></div>
+      <div class="reco"><div class="reco-num">04 · Transparencia</div><h3>Bajar la contratación directa y ejecutar el plan</h3><p>Cerrar la investigación de la Procuraduría con resultados públicos; acelerar el cumplimiento del Plan de Desarrollo antes de que se acabe la vigencia.</p></div>
+      <div class="reco"><div class="reco-num">05 · Ambiente</div><h3>Monitorear lo que no se puede gestionar a ciegas</h3><p>Reponer estaciones de calidad del aire; sanear los ríos más críticos; ampliar zona verde por habitante.</p></div>
+      <div class="reco"><div class="reco-num">06 · Juventud</div><h3>Participación con peso real, no simbólica</h3><p>Que el Consejo Municipal de Juventud tenga incidencia real sobre presupuesto, movilidad y seguridad —los tres temas que los jóvenes más nombran.</p></div>
+      <div class="reco"><div class="reco-num">07 · Salud</div><h3>Evitar el cierre de la red hospitalaria pública</h3><p>Gestionar activamente ante la Nación el pago de la deuda de las EPS al HUV y a la red privada que sostiene al sistema; sin eso, cualquier otra prioridad de la ciudad queda en segundo plano si colapsa la atención en salud.</p></div>
+      <div class="reco"><div class="reco-num">08 · Institucional</div><h3>Cerrar el POT y pelear la inversión nacional justa</h3><p>Aprobar el nuevo POT y avanzar en Cali Distrito y el AMSO antes de que termine 2026; y exigir con cifras en la mano —10% del PIB del país, solo 3% de la inversión en infraestructura— una porción más justa del presupuesto nacional, incluyendo el cierre del Tren de Cercanías.</p></div>
+      <div class="reco"><div class="reco-num">09 · Economía</div><h3>Convertir la inversión en empleo joven verificable</h3><p>Ejecutar y auditar públicamente "Invertir para Crecer" y la inversión extranjera captada (US$1.151 M, 63 proyectos); exigir cuotas de contratación de jóvenes de 18+ sin experiencia, con modelos de práctica remunerada tipo Semillero Comercial, como condición de esos contratos.</p></div>
+    </div>
+  </section>
+
+  <section id="estrategias">
+    <div class="section-head"><span class="section-num">08</span><h2>Qué podría hacer distinto el próximo alcalde</h2></div>
+    <p class="lede">No se trata de inventar desde cero: Cali ya tiene un precedente propio de éxito y ciudades vecinas ofrecen lecciones recientes. Estas son las estrategias mejor respaldadas por la evidencia para los tres frentes más críticos —seguridad, empleo joven y vías y tránsito— con lo que ya se sabe que funciona, lo que hoy está a medias, y lo que un próximo gobierno tendría que retomar o corregir.</p>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Seguridad: volver a lo que ya funcionó una vez</h3><span class="tag info">Estrategia</span></div>
+      <div class="precedent"><strong>Un precedente real, en la propia Cali</strong>Entre 2012 y 2015, una combinación de tres frentes —ofensiva contra estructuras criminales (oficinas de cobro, bandas de "jíbaros" en 61 parques y 27 zonas escolares), la duplicación de los recursos de prevención juvenil (2.000 jóvenes en 88 pandillas identificadas) y un Centro de Comando y Control con cámaras y patrullaje aéreo— bajó la tasa de homicidios de la ciudad de 60 a 33 por cada 100.000 habitantes. No fue un solo golpe policial: fue represión y prevención al mismo tiempo, sostenidas varios años.</div>
+      <ul class="strat-list">
+        <li><strong>Blindar la continuidad del mando policial.</strong> Cali tuvo tres comandantes de Policía en dos años, lo que rompió la continuidad operativa; Medellín atribuye su reducción de homicidios del 25% en 2026 a un modelo de gestión territorial —"delito por delito, territorio por territorio", con seguimiento semanal— que solo funciona si el mando no cambia cada pocos meses.</li>
+        <li><strong>Multiplicar el presupuesto de prevención, no solo el operativo.</strong> Hoy "En la Buena" —el programa insignia de prevención juvenil— recibe cerca de $5.545 millones, apenas 0,1% del presupuesto distrital, para 2.700 jóvenes en 8 comunas. La receta de 2012–2015 solo funcionó porque la prevención creció al mismo ritmo que la represión.</li>
+        <li><strong>Ejecutar lo que ya está aprobado.</strong> Proyectos de prevención con fondos disponibles en las comunas 12, 15 y 21 no se ejecutaron en 2024, según el propio Concejo —antes de pedir más plata, hay que gastar la que ya existe.</li>
+        <li><strong>Medir con indicadores de impacto, no de cobertura.</strong> Concejales y consejeros de juventud señalan que los programas actuales no muestran si realmente transforman la vida de los jóvenes atendidos, más allá de contar cuántos asistieron.</li>
+        <li><strong>Atacar estructuras, no solo territorios.</strong> Con más de 190 bandas fragmentadas disputando microtráfico y extorsión, la inteligencia e investigación judicial para desarticular redes pesa tanto como la presencia policial visible.</li>
+        <li><strong>Dar continuidad a la política pública más allá del periodo de gobierno</strong> —la recomendación central del Instituto Cisalva (Universidad del Valle), que insiste en que los programas de prevención necesitan sostenerse de una administración a otra para mostrar resultados.</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Empleo joven: de programas de barrio a política de ciudad</h3><span class="tag info">Estrategia</span></div>
+      <div class="precedent"><strong>Una plantilla ya probada, para escalar</strong>El modelo "Semillero Comercial" —alianza entre Claro y la Universidad de La Sabana (TEC)— apunta exactamente al perfil que más le cuesta emplearse: mayores de 18 años, bachilleres, sin experiencia previa. Combina 6 meses de formación con 12 meses de práctica remunerada bajo contrato de aprendizaje, con una ruta clara hacia la vinculación formal. Hoy ofrece 160 cupos en Cali; el reto para el próximo gobierno es replicar ese esquema —formación corta + práctica pagada + contrato de aprendizaje— con más empresas ancla de la ciudad y escalarlo a miles de cupos, no a cientos.</div>
+      <ul class="strat-list">
+        <li><strong>Escalar la Ruta de la Empleabilidad más allá de las 8 comunas de "En la Buena".</strong> El desempleo juvenil (19.2%) es un problema de toda la ciudad, no solo de las zonas de mayor violencia; hoy el programa llega a 2.700 jóvenes cuando la ciudad tiene más de 170.000 en la informalidad o sin ocupación.</li>
+        <li><strong>Activar de verdad los incentivos tributarios que ya existen.</strong> La Ley del Primer Empleo ofrece exenciones a empresas que contratan jóvenes, pero 53% de las compañías caleñas todavía exige experiencia previa —señal de que el beneficio no se está promoviendo ni exigiendo con suficiente fuerza a nivel local.</li>
+        <li><strong>Convertir los cursos cortos en rutas con salida laboral real.</strong> Formaciones como barbería o manicure ayudan, pero deben conectarse con alianzas entre el SENA y el sector privado hacia contratos de aprendizaje en sectores que sí están creciendo en Cali, como construcción (+72% en licencias).</li>
+        <li><strong>Condicionar la inversión pública y la contratación estatal a metas de empleo joven.</strong> Los 32 proyectos productivos del plan "Invertir para Crecer" y los 63 proyectos de inversión extranjera directa son la oportunidad más concreta para exigir, desde ya, cuotas de contratación de jóvenes sin experiencia bajo esquemas tipo Semillero Comercial —no dejarlo a la buena voluntad de cada empresa.</li>
+        <li><strong>Diferenciar la política por grupo.</strong> Mujeres jóvenes con hijos, personas con discapacidad y migrantes tardan considerablemente más en conseguir empleo (62, 312 y 167 días de búsqueda, respectivamente); una ruta única no les sirve igual que a un joven sin cargas de cuidado.</li>
+        <li><strong>No mostrar como estructural lo que es coyuntural.</strong> La mejora de 2025 dependió en parte del empleo temporal de la COP16 y se revirtió en 2026; la meta debe ser una baja que no dependa de un evento puntual en el calendario.</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <div class="theme-card-head"><h3>Vías y tránsito: gestionar la demanda, no solo pavimentar</h3><span class="tag info">Estrategia</span></div>
+      <ul class="strat-list">
+        <li><strong>Resolver primero la quiebra estructural del MIO.</strong> De las 12 fuentes de financiación aprobadas desde 2015, ninguna se implementó del todo. Cualquier estrategia de movilidad construida sobre un sistema masivo insolvente —que hoy mueve menos de un tercio de los pasajeros para los que fue diseñado— parte en falso.</li>
+        <li><strong>Gestionar la demanda de vehículos, no solo ampliar la oferta vial.</strong> La propia Autoridad Regional de Transporte (ART–Movamos Región) advierte que el crecimiento de la moto y el carro particular debe manejarse "estratégicamente" para no comprometer la sostenibilidad de la movilidad; eso implica carriles preferenciales reales para bus y bicicleta, y hacer el transporte masivo más atractivo que el vehículo propio —no solo prohibir.</li>
+        <li><strong>Poner la seguridad del motociclista en el centro, no al margen.</strong> Con 80% de los siniestros viales de la ciudad ligados a motos, y sin pico y placa para motos en el horizonte cercano (la administración actual ya lo descartó para 2026), la apuesta tiene que ir por infraestructura segura, control de velocidad y pedagogía vial dirigida específicamente a este grupo.</li>
+        <li><strong>Financiar la malla vial a varios años, no por contrato suelto.</strong> De 287 tramos planeados en "Obras de Corazón" solo 218 estaban resueltos a mitad de 2026; con 2.935 km de vías y 65% en mal estado, se necesita un plan de mantenimiento continuo y presupuestado, no una bolsa de dinero que se agota con cada administración.</li>
+        <li><strong>Integrar el transporte tradicional en vez de imponerlo.</strong> Los intentos de forzar la integración del transporte colectivo con el MIO detonaron protestas y bloqueos en 2026; una transición negociada, con incentivos reales para los transportadores, reduce el riesgo de que cada cambio termine en paro.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="participar">
+    <div class="section-head"><span class="section-num">09</span><h2>Dónde seguirlo de primera mano</h2></div>
+    <div class="channels">
+      <div class="channel"><a href="https://www.calicomovamos.org.co/" target="_blank" rel="noopener">Cali Cómo Vamos ↗</a><p>Informes de calidad de vida y encuestas de percepción ciudadana, independientes de la Alcaldía.</p></div>
+      <div class="channel"><a href="https://personeriacali.gov.co/servicios-seguimiento-al-plan-de-desarrollo/" target="_blank" rel="noopener">Personería de Cali ↗</a><p>Seguimiento al Plan de Desarrollo y canal para quejas sobre la gestión municipal.</p></div>
+      <div class="channel"><a href="https://www.cali.gov.co/gobierno/publicaciones/164730/consejo-municipal-de-juventud/" target="_blank" rel="noopener">Consejo Municipal de Juventud ↗</a><p>21 curules elegidas por voto popular; el canal formal de incidencia juvenil en la ciudad.</p></div>
+      <div class="channel"><a href="https://www.cali.gov.co/planeacion/" target="_blank" rel="noopener">Rendición de cuentas · Alcaldía de Cali ↗</a><p>Informes oficiales de gestión y avance del Plan de Desarrollo.</p></div>
+    </div>
+  </section>
+
+  <section id="fuentes">
+    <div class="section-head"><span class="section-num">10</span><h2>Fuentes</h2></div>
+    <div class="note">Algunas fuentes citadas (caliescribe.com, Revista RAYA) son columnas de opinión abiertamente críticas de la administración; se incluyen porque documentan denuncias con cifras verificables, pero se identifican como voces de opinión y no como reportería neutral.</div>
+    <div class="sources">
+      <ol>
+        <li><a href="https://www.calicomovamos.org.co/icv-2025" target="_blank" rel="noopener">Informe de Calidad de Vida 2025 — Cali Cómo Vamos</a></li>
+        <li><a href="https://occidente.co/cali/encuesta-percepcion-ciudadana-2025-cali-como-vamos-gestion-eder-orgullo/" target="_blank" rel="noopener">Encuesta de Percepción Ciudadana 2025: orgullo vs. gestión — Occidente.co</a></li>
+        <li><a href="https://occidente1.sindyk.com/cali/cali/encuesta-percepcion-ciudadana-cali-2025-movilidad-moto-mio" target="_blank" rel="noopener">Moto vs. MIO — resultados de movilidad, Encuesta de Percepción Ciudadana 2025</a></li>
+        <li><a href="https://90minutos.co/cali/percepcion-inseguridad-se-agrava-cali-27-04-2026/" target="_blank" rel="noopener">Percepción de inseguridad se agrava en Cali — 90 Minutos</a></li>
+        <li><a href="https://cwmas.com.co/cali/2026/04/30/desaprobacion-de-alejandro-eder-aumenta-drasticamente-y-llega-al-702/" target="_blank" rel="noopener">Desaprobación de Alejandro Eder llega al 70,2% — CWMas</a></li>
+        <li><a href="https://www.elpais.com.co/politica/gestion-del-alcalde-alejandro-eder-es-aprobada-por-un-199-de-ciudadanos-segun-encuesta-2405.html" target="_blank" rel="noopener">Gestión de Eder aprobada por 19,9% — El País</a></li>
+        <li><a href="https://www.elpais.com.co/cali/que-sienten-y-quieren-los-jovenes-calenos-0800.html" target="_blank" rel="noopener">Qué sienten y quieren los jóvenes caleños — El País</a></li>
+        <li><a href="https://www.radionica.rocks/cultura/analisis/que-pasa-con-los-jovenes-en-cali" target="_blank" rel="noopener">¿Qué pasa con los jóvenes en Cali? — Radiónica</a></li>
+        <li><a href="https://www.elnuevosiglo.com.co/nacion/jovenes-los-mas-optimistas-con-el-futuro-pero-muy-criticos-de-la-marcha-de-sus-ciudades" target="_blank" rel="noopener">Jóvenes, optimistas con el futuro pero críticos con sus ciudades — El Nuevo Siglo</a></li>
+        <li><a href="https://occidente.co/opinion/desde-la-sala-de-redaccion/desempleo-juvenil-en-cali-crisis-y-oportunidades/" target="_blank" rel="noopener">Desempleo juvenil en Cali: cifras, causas y oportunidades — Occidente.co</a></li>
+        <li><a href="https://www.lasillavacia.com/silla-nacional/el-mio-de-nadie-el-lio-del-transporte-publico-en-cali/" target="_blank" rel="noopener">El MIO de nadie — La Silla Vacía</a></li>
+        <li><a href="https://www.elpais.com.co/cali/a-punto-de-parar-los-mil-y-un-problemas-que-tienen-al-mio-en-la-peor-crisis-de-su-historia.html" target="_blank" rel="noopener">Los problemas que tienen al MIO en su peor crisis — El País</a></li>
+        <li><a href="https://www.elpais.com.co/cali/deterioro-de-rios-basuras-y-ruido-los-canceres-del-medio-ambiente-caleno-2157.html" target="_blank" rel="noopener">Deterioro de ríos, basuras y ruido — El País</a></li>
+        <li><a href="https://www.infobae.com/colombia/2025/06/17/alcaldia-de-cali-responde-a-la-procuraduria-tras-apertura-de-investigacion-por-presuntos-cobros-a-contratistas/" target="_blank" rel="noopener">Investigación de la Procuraduría por cobros a contratistas — Infobae</a></li>
+        <li><a href="https://revistaraya.com/elmer-montana/969-para-quien-gobierna-alejandro-eder.html" target="_blank" rel="noopener">¿Para quién gobierna Alejandro Eder? — Revista RAYA (opinión)</a></li>
+        <li><a href="https://caliescribe.com/2025/04/26/alcalde-eder1-ano-4-meses-de-gobierno-mas-de-50-errores/" target="_blank" rel="noopener">Balance crítico de gestión — Caliescribe (opinión)</a></li>
+        <li><a href="https://90minutos.co/cali/dos-anos-del-gobierno-alejandro-eder-cali-29-12-2025/" target="_blank" rel="noopener">Dos años del gobierno de Alejandro Eder — 90 Minutos</a></li>
+        <li><a href="https://www.cali.gov.co/gobierno/publicaciones/164730/consejo-municipal-de-juventud/" target="_blank" rel="noopener">Consejo Municipal de Juventud — Alcaldía de Cali</a></li>
+        <li><a href="https://personeriacali.gov.co/servicios-seguimiento-al-plan-de-desarrollo/" target="_blank" rel="noopener">Seguimiento al Plan de Desarrollo — Personería de Cali</a></li>
+        <li><a href="https://occidente.co/cali/cali-mejora-su-empleabilidad-con-mas-empleo-formal-y-una-menor-tasa-de-desempleo-juvenil-segun-el-dane/" target="_blank" rel="noopener">Cali mejora su empleabilidad, según el DANE — Occidente.co</a></li>
+        <li><a href="https://www.eltiempo.com/colombia/cali/por-que-bajaron-desempleo-entre-los-jovenes-y-tasa-de-trabajos-informales-en-cali-esto-explicaron-en-la-alcaldia-3467526" target="_blank" rel="noopener">Por qué bajaron el desempleo juvenil y la informalidad en Cali — El Tiempo</a></li>
+        <li><a href="https://www.elpais.com.co/economia/esto-es-lo-que-tarda-un-joven-en-cali-en-poder-contratarse-el-desempleo-cae-pero-hay-muchos-retos-1022.html" target="_blank" rel="noopener">Lo que tarda un joven en Cali en poder contratarse — El País</a></li>
+        <li><a href="https://www.elcolombiano.com/negocios/parque-automotor-colombia-2025-NP33968207" target="_blank" rel="noopener">Parque automotor de Colombia superó los 21,3 millones en 2025 — El Colombiano</a></li>
+        <li><a href="https://caliescribe.com/2026/03/16/movilidad-urbana-y-transporte-sostenible-en-cali-2025-diagnostico-del-parque-automotor-congestion-y-desafios-estructurales/" target="_blank" rel="noopener">Diagnóstico del parque automotor y la congestión en Cali — Caliescribe</a></li>
+        <li><a href="https://www.elpais.com.co/cali/cali-sigue-llena-de-huecos-el-65-de-la-malla-vial-de-la-ciudad-se-encuentra-en-mal-estado-0320.html" target="_blank" rel="noopener">Cali sigue llena de huecos: 65% de la malla vial en mal estado — El País</a></li>
+        <li><a href="https://www.elpais.com.co/cali/estudio-revela-que-motocicletas-lideran-la-movilidad-en-cali-desplazando-al-mio-representa-el-80-de-los-siniestros-viales-0411.html" target="_blank" rel="noopener">Las motocicletas representan el 80% de los siniestros viales — El País</a></li>
+        <li><a href="https://www.elpais.com.co/judicial/homicidios-en-cali-han-aumentado-en-2026-estas-son-las-estrategias-para-contener-la-violencia-1920.html" target="_blank" rel="noopener">Homicidios en Cali han aumentado en 2026 — El País</a></li>
+        <li><a href="https://www.elpais.com.co/judicial/cali-llego-a-100-homicidios-en-2026-las-grietas-internas-que-impiden-frenar-la-violencia-0822.html" target="_blank" rel="noopener">Las grietas internas que impiden frenar la violencia — El País</a></li>
+        <li><a href="https://www.elpais.com.co/judicial/por-que-medellin-paso-10-dias-consecutivos-sin-homicidios-y-cali-ya-suma-479-asesinatos-estas-son-las-cifras-de-ambas-ciudades-1010.html" target="_blank" rel="noopener">Cali vs. Medellín: por qué la violencia es tan distinta — El País</a></li>
+        <li><a href="https://estrelladigital.com.co/nacional/cali-seguridad-hurtos-homicidios/" target="_blank" rel="noopener">Seguridad Cali 2026: hurtos caen 21%, homicidios estables — Estrella Digital</a></li>
+        <li><a href="https://www.univalle.edu.co/lo-que-pasa-en-la-u/ante-el-aumento-de-violencia-en-cali-cisalva-propone-intervenciones-sostenibles-y-basadas-en-evidencia" target="_blank" rel="noopener">Cisalva propone intervenciones sostenibles y basadas en evidencia — Universidad del Valle</a></li>
+        <li><a href="https://www.elpais.com.co/judicial/las-tres-recetas-clave-contra-la-violencia-en-cali.html" target="_blank" rel="noopener">Las tres recetas clave contra la violencia en Cali (2012–2015) — El País</a></li>
+        <li><a href="https://www.infobae.com/colombia/2026/06/06/secretario-de-seguridad-de-medellin-explico-como-la-ciudad-llego-a-tener-la-menor-tasa-de-homicidios-del-pais-tomo-tiempo/" target="_blank" rel="noopener">Cómo Medellín llegó a la menor tasa de homicidios del país — Infobae</a></li>
+        <li><a href="https://www.elpais.com.co/judicial/en-la-buena-la-estrategia-con-la-que-la-alcaldia-busca-disminuir-la-violencia-en-ocho-comunas-de-cali-0747.html" target="_blank" rel="noopener">"En la Buena": la estrategia de la Alcaldía en ocho comunas — El País</a></li>
+        <li><a href="https://www.elpais.com.co/cali/concejales-y-consejeros-de-juventud-cuestionan-programa-de-la-alcaldia-para-proteccion-de-menores-de-practicas-ilegales-2920.html" target="_blank" rel="noopener">Concejales y consejeros de juventud cuestionan el programa de prevención — El País</a></li>
+        <li><a href="https://blog.bancolombia.com/bienestar-y-sostenibilidad/ley-primer-empleo/" target="_blank" rel="noopener">Ley del Primer Empleo: beneficios por contratar talento joven — Bancolombia</a></li>
+        <li><a href="https://www.elpais.com.co/cali/secretaria-de-movilidad-de-cali-desmiente-rumores-no-habra-pico-y-placa-para-motos-en-2026-0908.html" target="_blank" rel="noopener">Movilidad de Cali descarta pico y placa para motos en 2026 — El País</a></li>
+        <li><a href="https://www.cali.gov.co/gobierno/publicaciones/193607/terremoto-de-cali-repositorio-oficial-de-informacion/" target="_blank" rel="noopener">Terremoto de Cali — Repositorio Oficial de Información, Alcaldía de Cali</a></li>
+        <li><a href="https://es.wikipedia.org/wiki/Terremoto_de_Colombia_de_2026" target="_blank" rel="noopener">Terremoto de Colombia de 2026 — Wikipedia</a></li>
+        <li><a href="https://www.infobae.com/colombia/2026/08/10/fuertes-afectaciones-del-temblor-en-cali-tras-el-sismo-de-magnitud-74-con-epicentro-en-colombia-se-reportan-graves-consecuencias-en-edificios/" target="_blank" rel="noopener">Fuertes afectaciones del temblor en Cali — Infobae</a></li>
+        <li><a href="https://www.eluniversal.com.co/colombia/2026/08/23/cali-entra-en-fase-de-recuperacion-por-terremoto-podria-costar-10-billones/" target="_blank" rel="noopener">Cali entra en fase de recuperación; podría costar $10 billones — El Universal</a></li>
+        <li><a href="https://www.elpais.com.co/economia/terremoto-del-10-de-agosto-dejo-perdidas-economicas-por-30-billones-en-cinco-departamentos-el-valle-es-el-mas-afectado-2431.html" target="_blank" rel="noopener">Pérdidas económicas por $30 billones en cinco departamentos — El País</a></li>
+        <li><a href="https://90minutos.co/cali/reconstruccion-cali-terremoto-inmuebles-afectados-requeririan-demolerse-21-08-2026/" target="_blank" rel="noopener">20% de inmuebles afectados requerirían demolerse — 90 Minutos</a></li>
+        <li><a href="https://www.concejodecali.gov.co/publicaciones/61501/acudir-a-la-figura-de-declaratoria-de-calamidad-publica-la-propuesta-del-concejo-para-recuperar-a-cali/" target="_blank" rel="noopener">Declaratoria de calamidad pública, propuesta del Concejo — Concejo de Cali</a></li>
+        <li><a href="https://www.elcolombiano.com/colombia/muertos-terremoto-en-colombia-heridos-replicas-choco-hoy-GC39809690" target="_blank" rel="noopener">Cifra de muertos y heridos por el terremoto en Colombia — El Colombiano</a></li>
+        <li><a href="https://www.lasillavacia.com/en-vivo/este-domingo-inicia-firmaton-para-revocatoria-de-eder-en-cali/" target="_blank" rel="noopener">Inicia firmatón para la revocatoria de Eder en Cali — La Silla Vacía</a></li>
+        <li><a href="https://occidente.co/cali/crisis-salud-cali-2026-fundacion-valle-del-lili-huv-deuda-eps/" target="_blank" rel="noopener">S.O.S. por la crisis de salud en Cali: deudas superan $3 billones — Occidente.co</a></li>
+        <li><a href="https://90minutos.co/cali/cali-como-vamos-pide-priorizar-seguridad-salud-05-08-2026/" target="_blank" rel="noopener">Cali Cómo Vamos pide priorizar seguridad, salud y el tren de cercanías — 90 Minutos</a></li>
+        <li><a href="https://www.concejodecali.gov.co/publicaciones/61355/concejo-conocio-apartes-de-la-vision-del-nuevo-pot-y-su-articulacion-a-cali-distrito-amso-y-cali-500/" target="_blank" rel="noopener">El nuevo POT y su articulación con Cali Distrito, AMSO y Cali 500+ — Concejo de Cali</a></li>
+        <li><a href="https://www.elpais.com.co/valle/gobiernos-del-valle-cali-y-jamundi-firman-cofinanciacion-para-el-tren-de-cercanias-aun-falta-el-70-de-la-nacion-0746.html" target="_blank" rel="noopener">Cali, Valle y Jamundí firman cofinanciación del Tren de Cercanías — El País</a></li>
+        <li><a href="https://www.semana.com/mejor-colombia/articulo/delirio-la-fuerza-de-la-salsa-que-supero-la-violencia-y-la-pobreza-en-cali/202400/" target="_blank" rel="noopener">Delirio, la fuerza de la salsa que superó la violencia y la pobreza en Cali — Semana</a></li>
+        <li><a href="https://www.valledelcauca.gov.co/publicaciones/85019/escuela-apoyada-el-programa-que-beneficia-a-765-bailarines-de-salsa-en-el-valle/" target="_blank" rel="noopener">Escuela Apoyada: 765 bailarines beneficiados en el Valle — Gobernación del Valle</a></li>
+        <li><a href="https://www.pulzo.com/entretenimiento/salsodromo-2025-en-la-feria-de-cali-escuelas-juveniles-hacen-historia-en-competencia-de-salsa-PP4971229A" target="_blank" rel="noopener">Salsódromo 2025: primer concurso juvenil de salsa — Pulzo</a></li>
+        <li><a href="https://www.eltiempo.com/colombia/cali/juegos-panamericanos-junior-cali-le-apuesta-a-reactivar-su-legado-627498" target="_blank" rel="noopener">Juegos Panamericanos Junior: Cali reactiva su legado deportivo — El Tiempo</a></li>
+        <li><a href="https://www.cali.gov.co/boletines/publicaciones/186555/con-la-estrategia-parques-seguros-27-espacios-publicos-modernizaron-su-alumbrado/" target="_blank" rel="noopener">Estrategia "Parques Seguros": 27 espacios con alumbrado modernizado — Alcaldía de Cali</a></li>
+        <li><a href="https://occidente.co/cali/el-concejo-de-cali-aprobo-invertir-para-crecer-un-plan-de-3-5-billones-que-promete-empleo-obras-y-programas-sociales/" target="_blank" rel="noopener">El Concejo aprobó "Invertir para Crecer": empleo, obras y programas sociales — Occidente.co</a></li>
+        <li><a href="https://www.larepublica.co/economia/concejo-de-cali-aprueba-proyecto-invertir-para-crecer-4015797" target="_blank" rel="noopener">Concejo de Cali aprueba "Invertir para Crecer" con cupo de $3,5 billones — La República</a></li>
+        <li><a href="https://www.elpais.com.co/economia/el-pacifico-colombiano-atrae-us1151-millones-en-inversion-extranjera-y-fortalece-sus-exportaciones-3157.html" target="_blank" rel="noopener">El Pacífico colombiano atrae US$1.151 millones en inversión extranjera — El País</a></li>
+        <li><a href="https://www.elpais.com.co/economia/jovenes-de-cali-podran-acceder-a-programa-de-formacion-y-empleo-detalles-de-la-iniciativa-1612.html" target="_blank" rel="noopener">Jóvenes de Cali podrán acceder al programa "Semillero Comercial" de Claro y Unisabana — El País</a></li>
+        <li><a href="https://caliescribe.com/2026/05/15/cali-desarrollo-economico-desigualdad-y-perdida-de-competitividad/" target="_blank" rel="noopener">Cali: desarrollo económico, desigualdad y pérdida de competitividad — Caliescribe (opinión)</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>Elaborado a partir de fuentes públicas citadas arriba · agosto 2026</footer>
+
+</div>
